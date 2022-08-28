@@ -32,3 +32,9 @@ In this app we are using angular concepts are following these:
         1. npm i
         2. npx json-server --watch src/api/db.json
         3. ng serve
+
+## Add on  
+
+    Trying to deploy on Netlify
+    (https://statuesque-custard-1b9968.netlify.app/) But due to fake rest apis its not deployed properly.
+    

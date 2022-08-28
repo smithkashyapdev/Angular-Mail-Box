@@ -17,11 +17,10 @@ export class SidebarComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
     this.subscription.add(this.stateService.getUnreadCount.subscribe((value) => {
       this.unReadCount = value;
-      console.log('---this.unReadCount' + this.unReadCount);
     }));
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
   
 }
