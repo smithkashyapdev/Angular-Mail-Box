@@ -162,6 +162,10 @@ a[aria-expanded="true"]::before {
   outline: none;
 }
 
+.unReadCount {
+  float: right;
+}
+
 /* ---------------------------------------------------
   MEDIAQUERIES
 ----------------------------------------------------- */

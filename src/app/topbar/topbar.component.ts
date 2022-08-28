@@ -36,5 +36,9 @@ export class TopbarComponent implements OnInit {
       default:
         break;
     }
+
+    setTimeout(() => {
+      this.showClass = 'hide';
+    }, 1500);
   }
 }

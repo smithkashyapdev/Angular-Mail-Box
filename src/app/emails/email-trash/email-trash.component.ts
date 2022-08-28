@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Email } from 'src/app/models/Email';
 import { EmailService } from 'src/app/services/email/email-service';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-email-trash',
@@ -11,12 +12,12 @@ export class EmailTrashComponent implements OnInit {
   emails: Email[];
   hasEmails: boolean = true;
 
-  constructor(private emailService: EmailService) {}
+  constructor(private stateService: StateService) {}
 
   ngOnInit() {
-    this.emailService
-      .getTrashEmails()
-      .subscribe((emails: Email[]) => (this.emails = emails));
+    this.stateService.getTrashEmails.subscribe(
+      (emails: Email[]) => (this.emails = emails)
+    );
   }
 
   ngDoCheck() {

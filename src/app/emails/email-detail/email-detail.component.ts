@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Email } from 'src/app/models/Email';
+import { StateService } from 'src/app/services/state/state.service';
 import { EmailService } from '../../services/email/email-service';
 
 @Component({
@@ -20,6 +21,7 @@ export class EmailDetailComponent implements OnInit {
 
   constructor(
     private emailService: EmailService,
+    private stateService: StateService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -27,8 +29,12 @@ export class EmailDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
+
       this.emailService.getEmail(+params['id']).subscribe((email: Email) => {
         this.currentEmail = email;
+        if (email.read === 0) {
+          this.stateService.emailRead = email;
+        }
       });
     });
 
@@ -50,6 +56,7 @@ export class EmailDetailComponent implements OnInit {
 
   deleteEmail() {
     this.emailService.deleteMail(this.id).subscribe();
+    this.stateService.updateTrashEmails(this.currentEmail);
     this.router.navigate([this.currentParentRoute]);
   }
 }

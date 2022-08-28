@@ -1,10 +1,10 @@
 <h4>Sent</h4>
 <div class="list-group" *ngIf="hasEmails; else emptySection">
-  <app-email-sent-item
+  <app-email-item
     *ngFor="let emailItem of emails"
     [email]="emailItem"
     [id]="emailItem.id"
-  ></app-email-sent-item>
+  ></app-email-item>
 </div>
 <ng-template #emptySection>
   <p class="text-center"><em>Nothing to see here, great job!</em></p>

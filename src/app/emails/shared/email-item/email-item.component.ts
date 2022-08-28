@@ -3,13 +3,13 @@ import { Email } from 'src/app/models/Email';
 import { EmailService } from 'src/app/services/email/email-service';
 
 @Component({
-  selector: 'app-email-sent-item',
-  templateUrl: './email-sent-item.component.html',
-  styleUrls: ['./email-sent-item.component.css'],
+  selector: 'app-email-item',
+  templateUrl: './email-item.component.html',
+  styleUrls: ['./email-item.component.css'],
 })
-export class EmailSentItemComponent implements OnInit {
+export class EmailItemComponent implements OnInit {
   @Input() email: Email;
-  @Input() id: string;
+  @Input() id: string = '';
 
   constructor(private emailService: EmailService) {}
 
@@ -19,7 +19,7 @@ export class EmailSentItemComponent implements OnInit {
     return message.substr(0, 60) + '\u2026';
   }
 
-  deleteEmail() {
+  deleteEmail(id: string) {
     this.emailService.deleteMail(this.id).subscribe();
   }
 }

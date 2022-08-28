@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Email } from '../../models/Email';
 import { Observable, of } from 'rxjs';
+import { StateService } from '../state/state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,19 @@ import { Observable, of } from 'rxjs';
 export class EmailService {
   public sendSuccess = new EventEmitter<String>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private stateService: StateService) {}
+
+  loadEmailFromDb() {
+    this.getInbox().subscribe((data: Email[]) => {
+      this.stateService.updateInboxEmails(data);
+      const unreadCount = data.filter((e) => e.read === 0).length;
+      this.stateService.unReadCounter = unreadCount;
+    });
+
+    this.getTrashEmails().subscribe((data: Email[]) => {
+      this.stateService.setTrashEmails(data);
+    });
+  }
 
   getInbox(): Observable<Email[]> {
     return this.http.get<Email[]>('http://localhost:3000/emails');

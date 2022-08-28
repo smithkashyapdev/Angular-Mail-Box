@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Email } from 'src/app/models/Email';
 import { StateService } from 'src/app/services/state/state.service';
 import { EmailService } from '../../services/email/email-service';
@@ -8,20 +9,22 @@ import { EmailService } from '../../services/email/email-service';
   templateUrl: './email-inbox.component.html',
   styleUrls: ['./email-inbox.component.css'],
 })
-export class EmailInboxComponent implements OnInit {
+export class EmailInboxComponent implements OnInit,OnDestroy {
   emails: Email[] = [];
   hasEmails: boolean = true;
+  unreadCount: number = 0;
+  private subscription=new Subscription;
 
   constructor(
     private emailService: EmailService,
     private stateService: StateService
   ) {}
+  
 
   ngOnInit() {
-    this.emailService.getInbox().subscribe((data: Email[]) => {
-      this.stateService.updateInboxEmails(data);
-      this.emails = this.stateService.getInboxEmails();
-    });
+    this.subscription.add(this.stateService.getInboxEmails.subscribe((data: Email[]) => {
+      this.emails = data;
+    }));
   }
 
   ngDoCheck() {
@@ -30,5 +33,9 @@ export class EmailInboxComponent implements OnInit {
         ? (this.hasEmails = true)
         : (this.hasEmails = false);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

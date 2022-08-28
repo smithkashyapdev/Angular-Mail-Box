@@ -17,7 +17,7 @@ import { EmailModule } from './emails/email.module';
     TopbarComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule,EmailModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, EmailModule],
   providers: [],
   bootstrap: [AppComponent],
 })

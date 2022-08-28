@@ -6,6 +6,7 @@ export class Email {
   public fromEmail: string;
   public date: string;
   public subject: string;
+  public read: number;
   public message: string;
 
   constructor(
@@ -16,6 +17,7 @@ export class Email {
     fromEmail: string,
     date: string,
     subject: string,
+    read: number,
     message: string
   ) {
     this.id = id;
@@ -25,6 +27,7 @@ export class Email {
     this.fromEmail = fromEmail;
     this.date = date;
     this.subject = subject;
+    this.read = read;
     this.message = message;
   }
 }
