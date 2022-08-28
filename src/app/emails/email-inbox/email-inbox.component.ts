@@ -16,7 +16,6 @@ export class EmailInboxComponent implements OnInit,OnDestroy {
   private subscription=new Subscription;
 
   constructor(
-    private emailService: EmailService,
     private stateService: StateService
   ) {}
   

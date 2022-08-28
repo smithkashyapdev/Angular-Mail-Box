@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { EmailService } from '../services/email/email-service';
 
 @Component({
@@ -6,17 +7,19 @@ import { EmailService } from '../services/email/email-service';
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css'],
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit,OnDestroy {
   showClass = '';
   successText = '';
   successResponce: any;
+  private subscription=new Subscription;
 
   constructor(private emailService: EmailService) {}
+  
 
   ngOnInit() {
-    this.emailService.sendSuccess.subscribe(
+    this.subscription.add(this.emailService.sendSuccess.subscribe(
       (data: any) => (this.successResponce = data)
-    );
+    ));
   }
 
   ngDoCheck() {
@@ -37,8 +40,9 @@ export class TopbarComponent implements OnInit {
         break;
     }
 
-    setTimeout(() => {
-      this.showClass = 'hide';
-    }, 1500);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
