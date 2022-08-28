@@ -1,0 +1,13 @@
+<h4>Trash</h4>
+<div class="list-group" *ngIf="hasEmails; else emptySection">
+  <app-email-trash-item
+    *ngFor="let emailItem of emails"
+    [email]="emailItem"
+    [id]="emailItem.id"
+  ></app-email-trash-item>
+</div>
+<ng-template #emptySection>
+  <p class="text-center">
+    <em>Nothing to see here, great job!</em>
+  </p>
+</ng-template>
